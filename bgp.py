@@ -25,7 +25,7 @@ parser.add_argument('--sleep', default=3, type=int)
 args = parser.parse_args()
 
 FLAGS_rogue_as = args.rogue
-ROGUE_AS_NAME = 'R10'
+ROGUE_AS_NAME = 'R3'
 
 def log(s, col="green"):
     print T.colored(s, col)
@@ -87,32 +87,31 @@ class SimpleTopo(Topo):
         """
         self.addLink('R1', 'R4')
         self.addLink('R2', 'R4')
-        self.addLink('R3', 'R4')
         self.addLink('R4', 'R5')
         self.addLink('R4', 'R6')
         self.addLink('R5', 'R7')
         self.addLink('R6', 'R7')
         self.addLink('R7', 'R8')
         self.addLink('R7', 'R9')
-        
+	self.addLink('R7', 'R10')  
 
-        routers.append(self.addSwitch('R10'))
+        routers.append(self.addSwitch('R3'))
         for j in xrange(num_hosts_per_as):
-            hostname = 'h%d-%d' % (10, j+1)
+            hostname = 'h%d-%d' % (3, j+1)
             host = self.addNode(hostname)
             hosts.append(host)
-            self.addLink('R10', hostname)
+            self.addLink('R3', hostname)
         # This MUST be added at the end
-        self.addLink('R7', 'R10')
+        self.addLink('R4', 'R3')
         return
 
 
 def getIP(hostname):
     AS, idx = hostname.replace('h', '').split('-')
     AS = int(AS)
-    if AS == 10:
-        AS = 6
-    ip = '%s.0.%s.1/24' % (10+AS, idx)
+    if AS == 3:
+        AS = 8
+    ip = '%s.0.%s.1/24' % (AS, idx)
     return ip
 
 
@@ -121,9 +120,9 @@ def getGateway(hostname):
     AS = int(AS)
     # This condition gives AS4 the same IP range as AS3 so it can be an
     # attacker.
-    if AS == 10:
-        AS = 6
-    gw = '%s.0.%s.254' % (10+AS, idx)
+    if AS == 3:
+        AS = 8
+    gw = '%s.0.%s.254' % (AS, idx)
     return gw
 
 
@@ -162,8 +161,8 @@ def main():
         host.cmd("route add default gw %s" % (getGateway(host.name)))
 
     log("Starting web servers", 'yellow')
-    startWebserver(net, 'h6-1', "Default web server")
-    startWebserver(net, 'h10-1', "*** Attacker web server ***")
+    startWebserver(net, 'h8-1', "Default web server")
+    startWebserver(net, 'h3-1', "*** Attacker web server ***")
 
     CLI(net)
     net.stop()
