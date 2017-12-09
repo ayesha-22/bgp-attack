@@ -1,4 +1,4 @@
-# bgp-attack
+﻿# bgp-attack
 BGP path hijacking attack inside Mininet
 
 BGP attack
@@ -9,9 +9,7 @@ BGP attack
 
 3) sudo python bgp.py
 
-4) chmod +x filename.sh (script executável)
-
-./connect.sh
+4) chmod +x filename.sh (script executável) ./connect.sh
 
 5) sh ip bgp
 
