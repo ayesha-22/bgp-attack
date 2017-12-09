@@ -85,15 +85,10 @@ class SimpleTopo(Topo):
         for i in xrange(num_ases-1):
             self.addLink('R%d' % (i+1), 'R%d' % (i+2))
         """
-<<<<<<< HEAD
-        self.addLink('R4', 'R1')
-        self.addLink('R4', 'R2')
-	    self.addLink('R4', 'R3')
-=======
-        self.addLink('R1', 'R4')
+	
+        self.addLink('R1', 'R2')
         self.addLink('R2', 'R4')
-	self.addLink('R3', 'R4')
->>>>>>> d7e5957dcb951d3d8154ff5660a431a7cb2535b6
+	self.addLink('R3', 'R4')  
         self.addLink('R4', 'R5')
         self.addLink('R4', 'R6')
         self.addLink('R5', 'R7')
@@ -117,7 +112,7 @@ def getIP(hostname):
     AS, idx = hostname.replace('h', '').split('-')
     AS = int(AS)
     if AS == 10:
-        AS = 3
+        AS = 6
     ip = '%s.0.%s.1/24' % (AS, idx)
     return ip
 
@@ -128,7 +123,7 @@ def getGateway(hostname):
     # This condition gives AS4 the same IP range as AS3 so it can be an
     # attacker.
     if AS == 10:
-        AS = 3
+        AS = 6
     gw = '%s.0.%s.254' % (AS, idx)
     return gw
 
@@ -168,7 +163,7 @@ def main():
         host.cmd("route add default gw %s" % (getGateway(host.name)))
 
     log("Starting web servers", 'yellow')
-    startWebserver(net, 'h1-1', "Default web server")
+    startWebserver(net, 'h6-1', "Default web server")
     startWebserver(net, 'h10-1', "*** Attacker web server ***")
 
     CLI(net)
