@@ -9,7 +9,7 @@ BGP attack
 
 3) sudo python bgp.py
 
-4) chmod +x filename.sh (script executável) ./connect.sh
+4) ./connect.sh
 
 5) sh ip bgp
 
