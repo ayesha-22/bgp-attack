@@ -85,9 +85,15 @@ class SimpleTopo(Topo):
         for i in xrange(num_ases-1):
             self.addLink('R%d' % (i+1), 'R%d' % (i+2))
         """
+<<<<<<< HEAD
         self.addLink('R4', 'R1')
         self.addLink('R4', 'R2')
 	    self.addLink('R4', 'R3')
+=======
+        self.addLink('R1', 'R4')
+        self.addLink('R2', 'R4')
+	self.addLink('R3', 'R4')
+>>>>>>> d7e5957dcb951d3d8154ff5660a431a7cb2535b6
         self.addLink('R4', 'R5')
         self.addLink('R4', 'R6')
         self.addLink('R5', 'R7')
