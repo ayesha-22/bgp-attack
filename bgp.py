@@ -85,9 +85,9 @@ class SimpleTopo(Topo):
         for i in xrange(num_ases-1):
             self.addLink('R%d' % (i+1), 'R%d' % (i+2))
         """
-        self.addLink('R1', 'R4')
-        self.addLink('R2', 'R4')
-	    self.addLink('R3', 'R4')
+        self.addLink('R4', 'R1')
+        self.addLink('R4', 'R2')
+	    self.addLink('R4', 'R3')
         self.addLink('R4', 'R5')
         self.addLink('R4', 'R6')
         self.addLink('R5', 'R7')
@@ -112,7 +112,7 @@ def getIP(hostname):
     AS = int(AS)
     if AS == 10:
         AS = 3
-    ip = '%s.0.%s.1/24' % (10+AS, idx)
+    ip = '%s.0.%s.1/24' % (AS, idx)
     return ip
 
 
@@ -123,7 +123,7 @@ def getGateway(hostname):
     # attacker.
     if AS == 10:
         AS = 3
-    gw = '%s.0.%s.254' % (10+AS, idx)
+    gw = '%s.0.%s.254' % (AS, idx)
     return gw
 
 
@@ -162,7 +162,7 @@ def main():
         host.cmd("route add default gw %s" % (getGateway(host.name)))
 
     log("Starting web servers", 'yellow')
-    startWebserver(net, 'h3-1', "Default web server")
+    startWebserver(net, 'h1-1', "Default web server")
     startWebserver(net, 'h10-1', "*** Attacker web server ***")
 
     CLI(net)
