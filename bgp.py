@@ -111,7 +111,7 @@ def getIP(hostname):
     AS, idx = hostname.replace('h', '').split('-')
     AS = int(AS)
     if AS == 10:
-        AS = 6
+        AS = 1
     ip = '%s.0.%s.1/24' % (10+AS, idx)
     return ip
 
@@ -122,7 +122,7 @@ def getGateway(hostname):
     # This condition gives AS4 the same IP range as AS3 so it can be an
     # attacker.
     if AS == 10:
-        AS = 6
+        AS = 1
     gw = '%s.0.%s.254' % (10+AS, idx)
     return gw
 
@@ -162,7 +162,7 @@ def main():
         host.cmd("route add default gw %s" % (getGateway(host.name)))
 
     log("Starting web servers", 'yellow')
-    startWebserver(net, 'h6-1', "Default web server")
+    startWebserver(net, 'h1-1', "Default web server")
     startWebserver(net, 'h10-1', "*** Attacker web server ***")
 
     CLI(net)
