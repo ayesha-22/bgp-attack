@@ -90,6 +90,7 @@ class SimpleTopo(Topo):
         self.addLink('R3', 'R4')
         self.addLink('R4', 'R5')
         self.addLink('R4', 'R6')
+        self.addLink('R4', 'R7')
         self.addLink('R5', 'R7')
         self.addLink('R6', 'R7')
         self.addLink('R7', 'R8')
